@@ -1,20 +1,16 @@
-// client/src/components/QuickComplete.jsx
 
 import React, { useState } from 'react';
 import { useAuthStore } from '../stores/authStore.js';
-import api from '../utils/api.js'; // Assuming path to your API utility
+import api from '../utils/api.js'; 
 
 const QuickComplete = () => {
-    // Select state and action from the store using direct selectors
     const user = useAuthStore(state => state.user);
-    const updateUser = useAuthStore(state => state.updateUser); // Safe to use the action directly
+    const updateUser = useAuthStore(state => state.updateUser); 
 
-    // Local component state
     const [pagesRead, setPagesRead] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
 
-    // Function to handle the daily reading log
     const handleComplete = async (e) => {
         e.preventDefault();
 
@@ -27,17 +23,14 @@ const QuickComplete = () => {
         setIsLoading(true);
 
         try {
-            // 1. Call the API to log the reading and update the streak/stats
             const response = await api.post('/api/user/log-reading', {
-                userId: user._id, // Assumes user has an _id field
+                userId: user._id, 
                 pages: pages,
             });
 
-            // 2. Update the Zustand store with the new user data from the backend
             const updatedUser = response.data.user;
             updateUser(updatedUser); 
 
-            // 3. Clear form and provide success feedback
             setMessage(`Success! Logged ${pages} pages. Keep up the streak!`);
             setPagesRead('');
 
@@ -49,8 +42,6 @@ const QuickComplete = () => {
         }
     };
 
-    // Check if the user has completed reading today
-    // This relies on a 'lastReadDate' field (which the backend should populate)
     const hasCompletedToday = user.lastReadDate && (new Date(user.lastReadDate)).toDateString() === (new Date()).toDateString();
 
     return (

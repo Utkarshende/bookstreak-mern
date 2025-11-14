@@ -1,5 +1,3 @@
-// client/src/components/Layout.jsx
-
 import React from 'react';
 import { Outlet, Navigate, Link } from 'react-router';
 import { useAuthStore } from '../stores/authStore';
@@ -9,7 +7,6 @@ const Layout = () => {
     const user = useAuthStore(state => state.user);
     const logout = useAuthStore(state => state.logout);
 
-    // If not authenticated, redirect to the login page
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }
@@ -40,7 +37,6 @@ const Layout = () => {
                 </div>
             </header>
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                {/* Renders the child route components (e.g., HomePage) */}
                 <Outlet />
             </main>
         </div>

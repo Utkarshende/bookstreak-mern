@@ -1,4 +1,3 @@
-// client/src/pages/LeaderboardPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
@@ -11,7 +10,6 @@ const LeaderboardPage = () => {
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
-                // Fetch data from the public leaderboard endpoint
                 const response = await api.get('/api/streaks/leaderboard');
                 setLeaderboard(response.data);
                 setError(null);

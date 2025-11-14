@@ -1,4 +1,3 @@
-// client/src/pages/ChatPage.jsx
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuthStore } from '../stores/authStore';
@@ -18,17 +17,15 @@ const ChatPage = () => {
 
     const messagesEndRef = useRef(null);
 
-    // Effect to manage socket connection lifecycle
+    
     useEffect(() => {
         connectSocket();
         
-        // Cleanup on unmount
         return () => {
             disconnectSocket();
         };
     }, [connectSocket, disconnectSocket]);
 
-    // Effect to auto-scroll to the latest message
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);

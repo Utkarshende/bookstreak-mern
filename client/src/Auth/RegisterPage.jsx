@@ -1,5 +1,3 @@
-// client/src/pages/Auth/RegisterPage.jsx
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import api from '../utils/api';
@@ -10,7 +8,7 @@ const RegisterPage = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const login = useAuthStore(state => state.login); // Login immediately after registration
+    const login = useAuthStore(state => state.login); 
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,7 +20,6 @@ const RegisterPage = () => {
         setIsLoading(true);
         setError(null);
         
-        // Simple client-side password check
         if (formData.password.length < 6) {
             setError('Password must be at least 6 characters.');
             setIsLoading(false);
@@ -30,18 +27,15 @@ const RegisterPage = () => {
         }
 
         try {
-            // Call the backend API
             const response = await api.post('/api/auth/register', formData);
             
-            // On success, update the global state (logging the user in automatically)
+           
             const { token, user } = response.data;
             login(token, user); 
             
-            // Redirect to the home page
             navigate('/');
             
         } catch (err) {
-            // Display error message from the backend
             const errorMessage = err.response?.data?.error || 'Registration failed. Please check your network.';
             setError(errorMessage);
         } finally {

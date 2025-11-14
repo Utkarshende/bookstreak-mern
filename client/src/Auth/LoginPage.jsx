@@ -1,5 +1,3 @@
-// client/src/pages/Auth/LoginPage.jsx
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import api from '../utils/api';
@@ -23,18 +21,14 @@ const LoginPage = () => {
         setError(null);
 
         try {
-            // Call the backend API
             const response = await api.post('/api/auth/login', formData);
             
-            // On success, update the global state
             const { token, user } = response.data;
             login(token, user); 
             
-            // Redirect to the home page (which will now be accessible)
             navigate('/');
             
         } catch (err) {
-            // Display error message from the backend
             const errorMessage = err.response?.data?.error || 'Login failed. Please check your network.';
             setError(errorMessage);
         } finally {
