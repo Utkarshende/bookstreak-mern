@@ -1,14 +1,11 @@
-// server/server.js (CORRECTED ES MODULE SYNTAX)
-
-// 1. Imports
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import 'dotenv/config'; // Loads environment variables
+import 'dotenv/config'; 
 import http from 'http';
 import { Server } from 'socket.io'; 
 
-// Import local files (MUST include .js extension)
+
 import setupChatSocket from './sockets/chatSocket.js'; 
 import authRoutes from './routes/authRoutes.js';
 import readingRoutes from './routes/readingRoutes.js';
@@ -48,8 +45,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        // Ensure this matches your frontend port (e.g., 5173 if using Vite)
-        origin: "http://localhost:3000", 
+        origin: "http://localhost:5000", 
         methods: ["GET", "POST"]
     }
 });
@@ -57,7 +53,7 @@ const io = new Server(server, {
 setupChatSocket(io);
 
 
-// 7. Start the Server (Use 'server.listen' for Socket.io)
+// 7. Start the Server
 server.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`);
     console.log(`WebSocket server initialized.`);

@@ -1,12 +1,8 @@
-// server/controllers/bookController.js (ES MODULE CORRECTED)
+import Book from '../models/Book.js'; 
+import authMiddleware from '../middleware/authMiddleware.js'; 
 
-import Book from '../models/Book.js'; // Import model with .js extension
-import authMiddleware from '../middleware/authMiddleware.js'; // If used internally
 
-// =========================================================================
-// POST /api/books — Add Book (Protected)
-// =========================================================================
-export const addBook = async (req, res) => { // MUST use 'export const'
+export const addBook = async (req, res) => { 
     const { title, author, coverImage, pageCount } = req.body;
 
     try {
@@ -15,7 +11,7 @@ export const addBook = async (req, res) => { // MUST use 'export const'
             author,
             coverImage,
             pageCount,
-            addedBy: req.user._id // Assuming user ID is available from authMiddleware
+            addedBy: req.user._id 
         });
 
         await newBook.save();
@@ -25,11 +21,8 @@ export const addBook = async (req, res) => { // MUST use 'export const'
     }
 };
 
-// =========================================================================
-// GET /api/books — Search Books (Public)
-// =========================================================================
-export const searchBooks = async (req, res) => { // MUST use 'export const'
-    const { q } = req.query; // Query parameter is 'q'
+export const searchBooks = async (req, res) => { 
+    const { q } = req.query; 
 
     if (!q) {
         return res.status(400).json({ error: 'Search query (q) is required.' });
@@ -38,8 +31,8 @@ export const searchBooks = async (req, res) => { // MUST use 'export const'
     try {
         const books = await Book.find({
             $or: [
-                { title: { $regex: q, $options: 'i' } }, // Case-insensitive search on title
-                { author: { $regex: q, $options: 'i' } } // Case-insensitive search on author
+                { title: { $regex: q, $options: 'i' } },
+                { author: { $regex: q, $options: 'i' } } 
             ]
         }).limit(20);
 
@@ -49,4 +42,3 @@ export const searchBooks = async (req, res) => { // MUST use 'export const'
     }
 };
 
-// If using ES Modules, you do NOT need a module.exports block.
