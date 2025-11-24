@@ -45,7 +45,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        // FIX: This MUST include the client's origin (e.g., the React app's port)
+        
         origin: [
             "http://localhost:5173", // The common port for the React Vite client
             "http://127.0.0.1:5173",
