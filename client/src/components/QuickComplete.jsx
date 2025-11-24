@@ -13,7 +13,6 @@ const QuickComplete = () => {
     const handleComplete = async (e) => {
         e.preventDefault();
 
-        // Conversion to integer happens here, on submission.
         const pages = parseInt(pagesRead);
         if (isNaN(pages) || pages <= 0) {
             setMessage("Please enter a valid number of pages.");
@@ -32,7 +31,6 @@ const QuickComplete = () => {
             updateUser(updatedUser);
 
             setMessage(`Success! Logged ${pages} pages. Keep up the streak!`);
-            // Clear the input field state
             setPagesRead(''); 
 
         } catch (error) {
@@ -52,123 +50,54 @@ const QuickComplete = () => {
     };
 
     const hasCompletedToday = user.lastReadDate && (new Date(user.lastReadDate)).toDateString() === (new Date()).toDateString();
+    
+    // Determine message type for conditional styling
+    const isSuccess = message.includes('Success');
 
     return (
-        <form onSubmit={handleComplete} className="quick-complete-form">
+        <form onSubmit={handleComplete} className="flex flex-col items-center space-y-4">
             {hasCompletedToday ? (
-                <div className="completion-message success-box">
+                // Success Box: Green background, text, border, shadow-inner, centered
+                <div className="font-semibold text-lg p-3 rounded-lg shadow-inner w-full max-w-sm text-center text-green-600 bg-green-50 border border-green-300">
                     You have logged reading today. Fantastic!
                 </div>
             ) : (
                 <>
-                    <div className="input-group">
+                    {/* Input Group: Flex container for input and button */}
+                    <div className="flex w-full max-w-sm space-x-2">
                         <input
                             type="number"
                             placeholder="Pages read today"
                             value={pagesRead}
-                            // Changed to the new robust handler
                             onChange={handleInputChange} 
-                            className="pages-input"
                             required
                             min="1"
+                            // Input styling: flex-grow, padding, border, rounded-left, focus effects
+                            className="flex-grow px-4 py-2 border border-gray-300 rounded-l-md outline-none transition duration-150 ease-in-out focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                         />
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className={`log-button ${isLoading ? 'loading' : ''}`}
+                            // Button styling: padding, rounded-right, shadow, conditional background/cursor
+                            className={`
+                                px-4 py-2 rounded-r-md text-white font-medium shadow-md transition duration-150 ease-in-out
+                                ${isLoading 
+                                    ? 'bg-indigo-400 cursor-not-allowed opacity-60' 
+                                    : 'bg-indigo-600 hover:bg-indigo-700 cursor-pointer'
+                                }
+                            `}
                         >
                             {isLoading ? 'Logging...' : 'Log Reading'}
                         </button>
                     </div>
-                    {message && <p className={`message-text ${message.includes('Success') ? 'success' : 'error'}`}>{message}</p>}
+                    {/* Message Text: Conditional color based on success/error */}
+                    {message && (
+                        <p className={`text-sm ${isSuccess ? 'text-green-600' : 'text-red-500'} mt-[-8px]`}>
+                            {message}
+                        </p>
+                    )}
                 </>
             )}
-
-            <style jsx>{`
-                .quick-complete-form {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 16px; /* Space-y-4 */
-                }
-
-                .completion-message {
-                    font-weight: 600; /* Font-semibold */
-                    font-size: 18px; /* Text-lg */
-                    padding: 12px; /* P-3 */
-                    border-radius: 8px; /* Rounded-lg */
-                    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06); /* Shadow-inner */
-                    width: 100%;
-                    max-width: 384px; /* Max-w-sm */
-                    text-align: center;
-                }
-
-                .success-box {
-                    color: #059669; /* Text-green-600 */
-                    background-color: #ecfdf5; /* Bg-green-50 */
-                    border: 1px solid #a7f3d0;
-                }
-
-                .input-group {
-                    display: flex;
-                    width: 100%;
-                    max-width: 384px; /* Max-w-sm */
-                    gap: 8px; /* Space-x-2 */
-                }
-
-                .pages-input {
-                    flex-grow: 1; /* Flex-grow */
-                    padding: 8px 16px; /* Px-4 py-2 */
-                    border: 1px solid #d1d5db; /* Border border-gray-300 */
-                    border-radius: 4px 0 0 4px; /* Rounded-l-md */
-                    outline: none;
-                    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-                }
-
-                .pages-input:focus {
-                    border-color: #6366f1; /* Focus:border-indigo-500 */
-                    box-shadow: 0 0 0 1px #6366f1; /* Focus:ring-indigo-500 (simplified ring effect) */
-                }
-
-                .log-button {
-                    padding: 8px 16px; /* Px-4 py-2 */
-                    border-radius: 0 4px 4px 0; /* Rounded-r-md */
-                    color: white; /* Text-white */
-                    font-weight: 500; /* Font-medium */
-                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* Shadow-md */
-                    background-color: #4f46e5; /* Bg-indigo-600 */
-                    transition: background-color 0.15s ease-in-out; /* Transition-colors */
-                    border: none;
-                    cursor: pointer;
-                }
-
-                .log-button:hover:not(:disabled) {
-                    background-color: #4338ca; /* Hover:bg-indigo-700 */
-                }
-
-                .log-button.loading {
-                    background-color: #818cf8; /* Bg-indigo-400 */
-                    cursor: not-allowed;
-                }
-
-                .log-button:disabled {
-                    opacity: 0.6;
-                    cursor: not-allowed;
-                }
-
-                .message-text {
-                    font-size: 14px; /* Text-sm */
-                    margin-top: -8px; /* Adjust margin if needed */
-                }
-
-                .message-text.success {
-                    color: #059669; /* Text-green-600 */
-                }
-
-                .message-text.error {
-                    color: #ef4444; /* Text-red-500 */
-                }
-            `}</style>
         </form>
     );
 };

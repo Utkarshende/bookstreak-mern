@@ -2,23 +2,52 @@ import React from 'react';
 import { useAuthStore } from '../stores/authStore';
 import QuickComplete from '../components/QuickComplete';
 
+// Helper component for statistics cards
+const StatCard = ({ title, value, color }) => {
+    // Dynamically choose color classes based on the 'color' prop
+    let colorClass = '';
+    switch (color) {
+        case 'red':
+            colorClass = 'text-red-600';
+            break;
+        case 'green':
+            colorClass = 'text-green-600';
+            break;
+        case 'yellow':
+            colorClass = 'text-yellow-600';
+            break;
+        default:
+            colorClass = 'text-indigo-600';
+    }
+
+    return (
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-indigo-500">
+            <h3 className="text-lg font-medium text-gray-500 mt-0 mb-0">{title}</h3>
+            <p className={`mt-1 text-5xl font-bold leading-none ${colorClass}`}>{value}</p>
+        </div>
+    );
+};
+
+
 const HomePage = () => {
     const user = useAuthStore(state => state.user);
 
     if (!user) {
-        return <div className="loading-message">Loading user data...</div>;
+        return <div className="text-center p-10 text-gray-600 text-lg">Loading user data...</div>;
     }
 
     return (
-        <div className="home-page-container">
-            <header className="page-header">
-                <h1 className="header-title">
+        <div className="flex flex-col space-y-10 p-4 sm:p-6 lg:p-8">
+            {/* Page Header Section */}
+            <header className="bg-white p-8 rounded-lg shadow-xl text-center">
+                <h1 className="text-4xl font-extrabold text-indigo-700 m-0">
                     Welcome back, {user.name}!
                 </h1>
-                <p className="header-subtitle">Your mission: Keep the Streak Alive!</p>
+                <p className="mt-2 text-lg text-gray-500">Your mission: Keep the Streak Alive!</p>
             </header>
 
-            <div className="stats-grid">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StatCard
                     title="Current Streak 🔥"
                     value={`${user.streak} days`}
@@ -36,129 +65,15 @@ const HomePage = () => {
                 />
             </div>
 
-            <section className="section-card action-section">
-                <h2 className="section-title">
+            {/* Daily Reading Action Section */}
+            <section className="bg-white p-6 rounded-lg shadow-md text-center">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4 mt-0">
                     Daily Reading Action
                 </h2>
                 <QuickComplete />
             </section>
-
-    
-
-            <style jsx>{`
-                .home-page-container {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 40px; /* space-y-10 */
-                }
-
-                .loading-message {
-                    text-align: center;
-                    padding: 40px;
-                }
-
-                .page-header {
-                    background-color: white; /* bg-white */
-                    padding: 32px; /* p-8 */
-                    border-radius: 8px; /* rounded-lg */
-                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
-                    text-align: center; /* text-center */
-                }
-
-                .header-title {
-                    font-size: 36px; /* text-4xl */
-                    font-weight: 800; /* font-extrabold */
-                    color: #4338ca; /* text-indigo-700 */
-                    margin: 0;
-                }
-
-                .header-subtitle {
-                    margin-top: 8px; /* mt-2 */
-                    font-size: 18px; /* text-lg */
-                    color: #6b7280; /* text-gray-500 */
-                }
-
-                .stats-grid {
-                    display: grid;
-                    grid-template-columns: 1fr;
-                    gap: 24px; /* gap-6 */
-                }
-
-                @media (min-width: 768px) {
-                    .stats-grid {
-                        grid-template-columns: repeat(3, 1fr); /* md:grid-cols-3 */
-                    }
-                }
-
-                .section-card {
-                    background-color: white; /* bg-white */
-                    padding: 24px; /* p-6 */
-                    border-radius: 8px; /* rounded-lg */
-                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
-                }
-
-                .action-section {
-                    text-align: center;
-                }
-
-                .section-title {
-                    font-size: 24px; /* text-2xl */
-                    font-weight: 600; /* font-semibold */
-                    color: #1f2937; /* text-gray-800 */
-                    margin-bottom: 16px; /* mb-4 */
-                    margin-top: 0;
-                }
-
-                .reading-placeholder-text {
-                    color: #6b7280; /* text-gray-500 */
-                }
-            `}</style>
         </div>
     );
 };
-
-const StatCard = ({ title, value, color }) => (
-    <div className="stat-card">
-        <h3 className="stat-title">{title}</h3>
-        <p className={`stat-value ${color}`}>{value}</p>
-
-        <style jsx>{`
-            .stat-card {
-                background-color: white; /* bg-white */
-                padding: 24px; /* p-6 */
-                border-radius: 8px; /* rounded-lg */
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
-                border-left: 4px solid #6366f1; /* border-l-4 border-indigo-500 */
-            }
-
-            .stat-title {
-                font-size: 18px; /* text-lg */
-                font-weight: 500; /* font-medium */
-                color: #6b7280; /* text-gray-500 */
-                margin-top: 0;
-                margin-bottom: 0;
-            }
-
-            .stat-value {
-                margin-top: 4px; /* mt-1 */
-                font-size: 48px; /* text-5xl */
-                font-weight: bold; /* font-bold */
-                line-height: 1;
-            }
-
-            .stat-value.red {
-                color: #dc2626; /* text-red-600 */
-            }
-
-            .stat-value.green {
-                color: #059669; /* text-green-600 */
-            }
-
-            .stat-value.yellow {
-                color: #ca8a04; /* text-yellow-600 */
-            }
-        `}</style>
-    </div>
-);
 
 export default HomePage;

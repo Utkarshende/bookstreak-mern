@@ -8,7 +8,7 @@ const LoginPage = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const login = useAuthStore(state => state.login);
+    const login = useAuthStore(state => state.login); 
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,96 +36,20 @@ const LoginPage = () => {
         }
     };
 
-    const styles = {
-        container: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '100vh',
-            backgroundColor: '#f9fafb',
-            padding: '20px',
-            boxSizing: 'border-box',
-        },
-        card: {
-            width: '100%',
-            maxWidth: '448px',
-            padding: '40px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '30px', 
-            backgroundColor: '#fff',
-            borderRadius: '12px',
-            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-        },
-        title: {
-            fontSize: '1.875rem',
-            fontWeight: '700',
-            textAlign: 'center',
-            color: '#4f46e5',
-        },
-        form: {
-            marginTop: '32px', 
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '24px', 
-        },
-        input: {
-            width: '100%',
-            padding: '10px 16px',
-            border: '1px solid #d1d5db',
-            borderRadius: '6px',
-            transition: 'border-color 0.2s, box-shadow 0.2s',
-        },
-        error: {
-            fontSize: '0.875rem',
-            color: '#ef4444', 
-        },
-        buttonBase: {
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            padding: '10px 16px',
-            border: '1px solid transparent',
-            borderRadius: '6px',
-            boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-            fontSize: '0.875rem',
-            fontWeight: '500',
-            color: 'white',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s',
-        },
-        buttonPrimary: {
-            backgroundColor: '#4f46e5',
-        },
-        buttonLoading: {
-            backgroundColor: '#818cf8',
-            cursor: 'not-allowed',
-        },
-        linkContainer: {
-            fontSize: '0.875rem',
-            textAlign: 'center',
-        },
-        link: {
-            fontWeight: '500',
-            color: '#4f46e5',
-            textDecoration: 'none',
-        }
-    };
-
     return (
-        <div style={styles.container}>
-            <div style={styles.card}>
-                <h2 style={styles.title}>
+        <div className="flex items-center justify-center min-h-screen bg-gray-50 p-5 box-border">
+            <div className="w-full max-w-md p-10 flex flex-col gap-8 bg-white rounded-xl shadow-xl">
+                <h2 className="text-3xl font-bold text-center text-indigo-600">
                     Welcome Back to BookStreak
                 </h2>
-                <form style={styles.form} onSubmit={handleSubmit}>
+                <form className="mt-8 flex flex-col gap-6" onSubmit={handleSubmit}>
                     <input
                         type="email"
                         name="email"
                         required
                         placeholder="Email Address"
                         onChange={handleChange}
-                        style={styles.input}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
                     />
                     <input
                         type="password"
@@ -133,25 +57,29 @@ const LoginPage = () => {
                         required
                         placeholder="Password"
                         onChange={handleChange}
-                        style={styles.input}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
                     />
                     
-                    {error && <p style={styles.error}>{error}</p>}
+                    {error && <p className="text-sm text-red-600">{error}</p>}
                     
                     <button
                         type="submit"
                         disabled={isLoading}
-                        style={{
-                            ...styles.buttonBase,
-                            ...(isLoading ? styles.buttonLoading : styles.buttonPrimary),
-                        }}
+                        className={`
+                            w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white 
+                            transition duration-300 ease-in-out ${
+                                isLoading 
+                                ? 'bg-indigo-300 cursor-not-allowed' 
+                                : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                            }
+                        `}
                     >
                         {isLoading ? 'Logging in...' : 'Sign In'}
                     </button>
                 </form>
-                <div style={styles.linkContainer}>
-                    <p style={styles.linkText}>
-                        Don't have an account? <Link to="/register" style={styles.link}>Sign Up</Link>
+                <div className="text-sm text-center">
+                    <p className="text-gray-600">
+                        Don't have an account? <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">Sign Up</Link>
                     </p>
                 </div>
             </div>
