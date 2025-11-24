@@ -13,6 +13,7 @@ const QuickComplete = () => {
     const handleComplete = async (e) => {
         e.preventDefault();
 
+        // Conversion to integer happens here, on submission.
         const pages = parseInt(pagesRead);
         if (isNaN(pages) || pages <= 0) {
             setMessage("Please enter a valid number of pages.");
@@ -22,7 +23,7 @@ const QuickComplete = () => {
         setIsLoading(true);
 
         try {
-            const response = await api.post('/api/user/log-reading', {
+            const response = await api.post('/api/log-reading', {
                 userId: user._id,
                 pages: pages,
             });
@@ -31,13 +32,22 @@ const QuickComplete = () => {
             updateUser(updatedUser);
 
             setMessage(`Success! Logged ${pages} pages. Keep up the streak!`);
-            setPagesRead('');
+            // Clear the input field state
+            setPagesRead(''); 
 
         } catch (error) {
             console.error("Reading log failed:", error);
             setMessage(error.response?.data?.message || 'Failed to log reading.');
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        if (value === '' || /^\d+$/.test(value)) {
+            setPagesRead(value);
+            setMessage('');
         }
     };
 
@@ -56,10 +66,8 @@ const QuickComplete = () => {
                             type="number"
                             placeholder="Pages read today"
                             value={pagesRead}
-                            onChange={(e) => {
-                                setPagesRead(e.target.value);
-                                setMessage('');
-                            }}
+                            // Changed to the new robust handler
+                            onChange={handleInputChange} 
                             className="pages-input"
                             required
                             min="1"
