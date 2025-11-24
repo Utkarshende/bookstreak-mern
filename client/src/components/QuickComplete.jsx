@@ -23,7 +23,7 @@ const QuickComplete = () => {
         setIsLoading(true);
 
         try {
-            const response = await api.post('/api/log-reading', {
+            const response = await api.post('/api/readings/log-reading', {
                 userId: user._id,
                 pages: pages,
             });
