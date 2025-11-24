@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
+import { BrowserRouter, Routes, Route } from 'react-router'; 
 import { useAuthStore } from './stores/authStore';
 import Layout from './components/Layout';
 import LoginPage from './Auth/LoginPage.jsx';
@@ -28,7 +28,7 @@ function App() {
                   
                 </Route>
 
-             
+    
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
             </Routes>
