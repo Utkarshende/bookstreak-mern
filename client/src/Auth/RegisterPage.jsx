@@ -148,7 +148,7 @@ const RegisterPage = () => {
                                 </>
                             ) : (
                                 <>
-                                    Write Your First Chapter <SparklesIcon className="h-5 w-5 ml-2" />
+                                    Register <SparklesIcon className="h-5 w-5 ml-2" />
                                 </>
                             )}
                         </button>
