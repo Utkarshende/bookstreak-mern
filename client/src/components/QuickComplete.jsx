@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useAuthStore } from '../stores/authStore.js';
-import api from '../utils/api.js';
+// FIX: Removed the explicit '.js' extension from relative imports, as bundlers often resolve these automatically, and including them can sometimes cause resolution errors in certain environments.
+import { useAuthStore } from '../stores/authStore'; 
+import api from '../utils/api';
 import { CheckCircleIcon, BookOpenIcon, XCircleIcon } from '@heroicons/react/24/solid';
 
 const QuickComplete = () => {
@@ -23,6 +24,7 @@ const QuickComplete = () => {
         setIsLoading(true);
 
         try {
+            // Assuming 'api' is configured correctly to handle POST requests
             const response = await api.post('/api/readings/log-reading', {
                 userId: user._id,
                 pages: pages,
@@ -60,18 +62,19 @@ const QuickComplete = () => {
     const isError = message && !isSuccess;
 
     return (
-        <div className="p-6 bg-white rounded-xl shadow-lg border border-gray-100">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center space-x-2">
-                <BookOpenIcon className="h-6 w-6 text-indigo-500" />
+        // Component Container: Dark theme, elevated, and animated entrance
+        <div className="p-6 md:p-8 bg-gray-800 rounded-2xl shadow-xl border border-gray-700 animate-fade-in-down">
+            <h3 className="text-2xl font-extrabold text-gray-100 mb-6 flex items-center justify-center space-x-3 border-b border-gray-700 pb-3">
+                <BookOpenIcon className="h-7 w-7 text-teal-400 animate-pulse-slow-icon" />
                 <span>Quick Reading Log</span>
             </h3>
 
-            <form onSubmit={handleComplete} className="flex flex-col items-center space-y-5">
+            <form onSubmit={handleComplete} className="flex flex-col items-center space-y-6">
                 
                 {hasCompletedToday ? (
-                    // Success Box for Daily Completion
-                    <div className="flex items-center space-x-3 font-semibold text-lg p-4 rounded-xl w-full max-w-lg text-center text-green-700 bg-green-50 border-2 border-green-300 shadow-inner">
-                        <CheckCircleIcon className="h-6 w-6 flex-shrink-0 text-green-500" />
+                    // Success Box for Daily Completion: Dark theme friendly
+                    <div className="flex items-center space-x-3 font-semibold text-lg p-4 rounded-xl w-full max-w-lg text-center text-green-300 bg-green-900/50 border-2 border-green-700 shadow-inner transition duration-300 transform hover:scale-[1.01]">
+                        <CheckCircleIcon className="h-6 w-6 flex-shrink-0 text-green-400" />
                         <span className="flex-grow">
                             Daily streak maintained! You've logged reading today.
                         </span>
@@ -79,7 +82,7 @@ const QuickComplete = () => {
                 ) : (
                     <>
                         {/* Input Group: Flex container for input and button */}
-                        <div className="flex w-full max-w-lg space-x-3">
+                        <div className="flex w-full max-w-xl space-x-4">
                             <input
                                 type="number"
                                 placeholder="Enter pages read (e.g., 50)"
@@ -87,18 +90,18 @@ const QuickComplete = () => {
                                 onChange={handleInputChange} 
                                 required
                                 min="1"
-                                // Input styling: large padding, smooth focus transition, rounded-xl
-                                className="flex-grow px-5 py-3 border-2 border-gray-300 rounded-xl text-lg outline-none transition duration-200 ease-in-out focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 placeholder:text-gray-400"
+                                // Input styling: Dark background, light text, teal focus
+                                className="flex-grow px-5 py-3 border-2 border-gray-600 bg-gray-700 text-gray-100 rounded-xl text-lg outline-none transition duration-200 ease-in-out focus:border-teal-400 focus:ring-2 focus:ring-teal-700 placeholder:text-gray-400 shadow-md"
                             />
                             <button
                                 type="submit"
                                 disabled={isLoading || pagesRead.length === 0}
-                                // Button styling: professional indigo theme, shadow, hover effects, flex layout for spinner
+                                // Button styling: professional teal theme, strong interaction feedback
                                 className={`
-                                    flex items-center justify-center space-x-2 px-6 py-3 text-lg font-semibold rounded-xl text-white shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.01]
+                                    flex items-center justify-center space-x-2 px-6 py-3 text-lg font-semibold rounded-xl text-white shadow-xl transition duration-300 ease-in-out transform active:scale-[0.98]
                                     ${isLoading || pagesRead.length === 0 
-                                        ? 'bg-indigo-400 cursor-not-allowed opacity-80' 
-                                        : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300'
+                                        ? 'bg-teal-700/50 cursor-not-allowed opacity-70' 
+                                        : 'bg-teal-600 hover:bg-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-400 hover:shadow-teal-500/50'
                                     }
                                 `}
                             >
@@ -120,19 +123,40 @@ const QuickComplete = () => {
 
                 {/* Status Message Text (Success/Error/Validation) */}
                 {message && (
-                    <div className={`flex items-center space-x-2 p-3 rounded-lg w-full max-w-lg ${
+                    <div className={`flex items-center space-x-2 p-3 rounded-xl w-full max-w-xl text-base font-medium shadow-md ${
                         isSuccess 
-                        ? 'bg-green-100 text-green-700 border border-green-300' 
+                        ? 'bg-green-800/50 text-green-300 border border-green-700' 
                         : isError 
-                            ? 'bg-red-100 text-red-700 border border-red-300' 
-                            : 'bg-yellow-100 text-yellow-700 border border-yellow-300' // Default or validation error
+                            ? 'bg-red-800/50 text-red-300 border border-red-700' 
+                            : 'bg-yellow-800/50 text-yellow-300 border border-yellow-700' // Default or validation error
                     }`}>
-                        {isSuccess && <CheckCircleIcon className="h-5 w-5 flex-shrink-0" />}
-                        {isError && <XCircleIcon className="h-5 w-5 flex-shrink-0" />}
-                        <p className="text-base font-medium">{message}</p>
+                        {isSuccess && <CheckCircleIcon className="h-5 w-5 flex-shrink-0 text-green-400" />}
+                        {isError && <XCircleIcon className="h-5 w-5 flex-shrink-0 text-red-400" />}
+                        <p>{message}</p>
                     </div>
                 )}
             </form>
+
+            {/* Custom Styles for Animations */}
+            <style jsx>{`
+                /* Subtle, slower pulse for the icon to differentiate from header */
+                @keyframes pulse-slow-icon {
+                    0%, 100% { opacity: 0.8; transform: scale(1); }
+                    50% { opacity: 1; transform: scale(1.03); }
+                }
+                .animate-pulse-slow-icon {
+                    animation: pulse-slow-icon 4s infinite ease-in-out;
+                }
+                
+                /* Fade in from the top for the component */
+                @keyframes fade-in-down {
+                    0% { opacity: 0; transform: translateY(-15px); }
+                    100% { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fade-in-down {
+                    animation: fade-in-down 0.5s ease-out;
+                }
+            `}</style>
         </div>
     );
 };

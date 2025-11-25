@@ -113,7 +113,7 @@ const ChatPage = () => {
                         placeholder={isConnected ? "Share your reading thoughts..." : "Connecting to chat server..."}
                         disabled={!isConnected}
                         // Input styling: large padding, rounded-xl, prominent focus, disabled state
-                        className="flex-grow px-5 py-3 border-2 border-gray-300 rounded-xl text-base outline-none transition duration-200 ease-in-out focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        className="text-black flex-grow px-5 py-3 border-2 border-gray-300 rounded-xl text-base outline-none transition duration-200 ease-in-out focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     />
                     <button
                         type="submit"
