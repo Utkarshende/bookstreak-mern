@@ -4,7 +4,7 @@ BookStreak is a full-stack application designed to help users maintain a daily r
 
 ## Application Screenshot 
 
-!(/client/public/app-screenshot.png)
+![Screenshot of the Leaderboard](/client/public/app-screenshot.png)
 
 ## Live Demo 
 
