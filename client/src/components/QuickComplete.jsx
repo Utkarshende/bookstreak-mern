@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// FIX: Removed the explicit '.js' extension from relative imports, as bundlers often resolve these automatically, and including them can sometimes cause resolution errors in certain environments.
 import { useAuthStore } from '../stores/authStore'; 
 import api from '../utils/api';
 import { CheckCircleIcon, BookOpenIcon, XCircleIcon } from '@heroicons/react/24/solid';
@@ -24,7 +23,6 @@ const QuickComplete = () => {
         setIsLoading(true);
 
         try {
-            // Assuming 'api' is configured correctly to handle POST requests
             const response = await api.post('/api/readings/log-reading', {
                 userId: user._id,
                 pages: pages,
@@ -33,7 +31,6 @@ const QuickComplete = () => {
             const updatedUser = response.data.user;
             updateUser(updatedUser);
 
-            // Using the full message structure for clarity
             setMessage(`Success! Logged ${pages} pages.`);
             setPagesRead(''); 
 
@@ -47,22 +44,18 @@ const QuickComplete = () => {
 
     const handleInputChange = (e) => {
         const value = e.target.value;
-        // Allows empty string or positive integers only
         if (value === '' || /^[1-9]\d*$/.test(value)) { 
             setPagesRead(value);
             setMessage('');
         }
     };
 
-    // Check if the user completed a reading log today
     const hasCompletedToday = user.lastReadDate && (new Date(user.lastReadDate)).toDateString() === (new Date()).toDateString();
     
-    // Determine message type for conditional styling
     const isSuccess = message.startsWith('Success');
     const isError = message && !isSuccess;
 
     return (
-        // Component Container: Dark theme, elevated, and animated entrance
         <div className="p-6 md:p-8 bg-gray-800 rounded-2xl shadow-xl border border-gray-700 animate-fade-in-down">
             <h3 className="text-2xl font-extrabold text-gray-100 mb-6 flex items-center justify-center space-x-3 border-b border-gray-700 pb-3">
                 <BookOpenIcon className="h-7 w-7 text-teal-400 animate-pulse-slow-icon" />
@@ -72,7 +65,6 @@ const QuickComplete = () => {
             <form onSubmit={handleComplete} className="flex flex-col items-center space-y-6">
                 
                 {hasCompletedToday ? (
-                    // Success Box for Daily Completion: Dark theme friendly
                     <div className="flex items-center space-x-3 font-semibold text-lg p-4 rounded-xl w-full max-w-lg text-center text-green-300 bg-green-900/50 border-2 border-green-700 shadow-inner transition duration-300 transform hover:scale-[1.01]">
                         <CheckCircleIcon className="h-6 w-6 flex-shrink-0 text-green-400" />
                         <span className="flex-grow">
@@ -81,7 +73,6 @@ const QuickComplete = () => {
                     </div>
                 ) : (
                     <>
-                        {/* Input Group: Flex container for input and button */}
                         <div className="flex w-full max-w-xl space-x-4">
                             <input
                                 type="number"
@@ -90,13 +81,11 @@ const QuickComplete = () => {
                                 onChange={handleInputChange} 
                                 required
                                 min="1"
-                                // Input styling: Dark background, light text, teal focus
                                 className="flex-grow px-5 py-3 border-2 border-gray-600 bg-gray-700 text-gray-100 rounded-xl text-lg outline-none transition duration-200 ease-in-out focus:border-teal-400 focus:ring-2 focus:ring-teal-700 placeholder:text-gray-400 shadow-md"
                             />
                             <button
                                 type="submit"
                                 disabled={isLoading || pagesRead.length === 0}
-                                // Button styling: professional teal theme, strong interaction feedback
                                 className={`
                                     flex items-center justify-center space-x-2 px-6 py-3 text-lg font-semibold rounded-xl text-white shadow-xl transition duration-300 ease-in-out transform active:scale-[0.98]
                                     ${isLoading || pagesRead.length === 0 
@@ -121,7 +110,6 @@ const QuickComplete = () => {
                     </>
                 )}
 
-                {/* Status Message Text (Success/Error/Validation) */}
                 {message && (
                     <div className={`flex items-center space-x-2 p-3 rounded-xl w-full max-w-xl text-base font-medium shadow-md ${
                         isSuccess 
@@ -137,7 +125,6 @@ const QuickComplete = () => {
                 )}
             </form>
 
-            {/* Custom Styles for Animations */}
             <style jsx>{`
                 /* Subtle, slower pulse for the icon to differentiate from header */
                 @keyframes pulse-slow-icon {

@@ -1,8 +1,5 @@
 import React from 'react';
 import { Outlet, Navigate, Link } from 'react-router-dom'; 
-// FIX: Reverting to the most common relative path: '../stores/authStore'. 
-// This assumes the component is nested one level down (e.g., in 'components') 
-// and the store is in a sibling folder (e.g., 'stores').
 import { useAuthStore } from '../stores/authStore'; 
 import { BookOpenIcon, UsersIcon, ChatBubbleLeftRightIcon, ArrowRightOnRectangleIcon, HomeIcon } from '@heroicons/react/24/outline';
 
@@ -12,12 +9,10 @@ const Layout = () => {
     const user = useAuthStore(state => state.user);
     const logout = useAuthStore(state => state.logout);
 
-    // If not authenticated, redirect to the login page
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }
 
-    // Helper component for styled navigation links
     const NavLink = ({ to, icon: Icon, children }) => (
         <Link 
             to={to} 
@@ -30,35 +25,28 @@ const Layout = () => {
     );
 
     return (
-        // 1. Immersive Background: Dark slate gradient
         <div className="min-h-screen bg-gray-900 font-sans antialiased text-gray-100 
                     bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900">
             
-            {/* 2. Header: Fixed top, distinct dark background, subtle glow animation */}
             <header className="sticky top-0 z-10 bg-gray-800 shadow-xl border-b border-gray-700 animate-header-slide-down">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
                     
-                    {/* Brand/Logo: Teal accent and pulse */}
                     <Link to="/" className="flex items-center space-x-2 text-2xl font-extrabold text-teal-400 tracking-tight transition duration-200 hover:text-teal-300">
                         <BookOpenIcon className="h-7 w-7 text-teal-500 animate-pulse-slow" />
                         <span>BookStreak</span>
                     </Link>
                     
-                    {/* Main Navigation */}
                     <nav className="flex items-center space-x-1 sm:space-x-3">
                         <NavLink to="/" icon={HomeIcon}>Home</NavLink>
                         <NavLink to="/leaderboard" icon={UsersIcon}>Leaderboard</NavLink>
                         <NavLink to="/chat" icon={ChatBubbleLeftRightIcon}>Chat</NavLink>
                     </nav>
                     
-                    {/* User and Logout */}
                     <div className="flex items-center space-x-3 sm:space-x-4">
-                        {/* User Greeting: Rich background, teal name highlight */}
                         <span className="hidden sm:inline text-sm text-gray-300 font-medium bg-gray-700 px-3 py-1.5 rounded-full border border-gray-600 shadow-inner">
                             Welcome, <span className="font-semibold text-teal-400">{user?.name || 'Reader'}</span>
                         </span>
                         
-                        {/* Logout Button: High contrast red for action, enhanced interaction */}
                         <button
                             onClick={logout}
                             className="flex items-center space-x-1.5 px-3 py-2 text-sm font-medium rounded-lg text-white bg-red-600 shadow-md 
@@ -71,15 +59,12 @@ const Layout = () => {
                 </div>
             </header>
             
-            {/* Main Content Area */}
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Content Wrapper: Dark, elevated card, smooth entry animation */}
                 <div className="p-6 md:p-10 bg-gray-800 rounded-xl shadow-2xl border border-gray-700 animate-fade-in-up">
                     <Outlet />
                 </div>
             </main>
 
-            {/* Custom Styles for Animations */}
             <style jsx>{`
                 /* Simple pulse for the brand icon */
                 @keyframes pulse-slow {
