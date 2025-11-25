@@ -2,6 +2,10 @@
 
 BookStreak is a full-stack application designed to help users maintain a daily reading habit, track their progress, and engage in social competition via a real-time leaderboard and chat system.
 
+## Application Screenshot 
+
+!(/client/public/app-screenshot.png)
+
 ## Live Demo 
 
 Click on the link :  https://bookstreak-mern-frontend.onrender.com
