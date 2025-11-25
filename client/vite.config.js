@@ -1,11 +1,13 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-// import tailwindcss from '@tailwindcss/vite' // REMOVED
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
-  // Removed the explicit tailwindcss() plugin registration.
-  // Vite will automatically detect and use postcss.config.js
-  // and tailwind.config.js now.
-  plugins: [react()], 
-})
+  plugins: [react()],
+  // -----------------------------------------------------------------
+  // CRITICAL FIX: Ensure the base path is correct for production.
+  // Using './' or '' (empty string) often fixes resource loading 404s
+  // when deploying to relative paths or static sites.
+  // -----------------------------------------------------------------
+  base: './', 
+});

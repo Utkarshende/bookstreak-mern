@@ -9,7 +9,7 @@ import { PaperAirplaneIcon, WifiIcon, SignalSlashIcon } from '@heroicons/react/2
 // === ACTION REQUIRED ===
 // REPLACE THE FOLLOWING STRING WITH THE EXTERNAL URL OF YOUR BOOKSTREAK BACKEND:
 // E.g., "https://bookstreak-mern-backend.onrender.com"
-const SOCKET_SERVER_URL = "YOUR_BOOKSTREAK_BACKEND_URL_HERE"; 
+const SOCKET_SERVER_URL = "https://bookstreak-mern-api.onrender.com"; 
 
 
 const ChatPage = () => {
