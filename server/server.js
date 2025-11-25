@@ -25,10 +25,7 @@ mongoose.connect(process.env.VITE_API_URL)
 
 
 // 4. Middleware Setup
-app.use(cors({
-  origin: 'https://bookstreakkk.netlify.app'
-}));
-
+app.use(cors());
 app.use(express.json());
 
 
