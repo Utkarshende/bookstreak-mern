@@ -122,7 +122,7 @@ export const useChatStore = create((set, get) => ({
                 content, 
                 room: currentRoom,
                 messageType: 'text',
-                created At: new Date().toISOString(),
+                createdAt: new Date().toISOString(),
                 reactions: []
             };
             set(state => ({ messages: [...state.messages, tempMessage] }));
