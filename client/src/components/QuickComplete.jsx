@@ -19,13 +19,18 @@ const QuickComplete = () => {
             setMessage("Please enter a valid number of pages.");
             return;
         }
+        if (pages > 20) {
+            alert("You cannot add more than 20 pages at once.");
+            setMessage("Maximum allowed is 20 pages per log.");
+            return;
+        }
 
         setIsLoading(true);
 
         try {
             const response = await api.post('/api/readings/log-reading', {
                 userId: user._id,
-                pages: pages,
+                pagesRead: pages, // Ensure correct field name for backend
             });
 
             const updatedUser = response.data.user;
