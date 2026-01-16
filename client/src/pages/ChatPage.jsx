@@ -143,7 +143,7 @@ const ChatPage = () => {
         <SignalSlashIcon className="h-4 w-4 mr-1 text-red-300" />;
 
     return (
-        <div className="flex gap-4">
+        <div className="flex gap-6 px-4 py-6 bg-gradient-to-br from-teal-50 via-white to-gray-100 min-h-screen">
             {/* Main Chat */}
             <div className="flex-grow flex flex-col h-[75vh] bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
                 {/* Header */}
@@ -236,30 +236,31 @@ const ChatPage = () => {
                 {/* Input Area */}
                 <footer className="p-4 border-t border-gray-200 bg-white">
                     {editingMessageId && (
-                        <div className="mb-2 p-2 bg-blue-50 border-l-4 border-blue-500 rounded">
+                        <div className="mb-2 p-2 bg-blue-50 border-l-4 border-blue-500 rounded flex items-center gap-2 animate-pulse">
+                            <PencilIcon className="h-4 w-4 text-blue-500" />
                             <p className="text-sm text-gray-600">Editing message...</p>
                         </div>
                     )}
                     <form onSubmit={handleSubmit} className="relative">
-                        <div className="flex space-x-3">
+                        <div className="flex items-center gap-2">
                             <div className="relative">
                                 <button
                                     type="button"
                                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                                    className="p-3 bg-gray-200 hover:bg-gray-300 rounded-xl transition"
+                                    className="p-2 bg-gray-100 hover:bg-teal-100 rounded-full border border-gray-300 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-teal-300"
+                                    aria-label="Add emoji"
                                 >
-                                    <FaceSmileIcon className="h-5 w-5 text-gray-700" />
+                                    <FaceSmileIcon className="h-6 w-6 text-teal-600" />
                                 </button>
-                                
                                 {/* Emoji Picker */}
                                 {showEmojiPicker && (
-                                    <div className="absolute bottom-14 left-0 bg-white border border-gray-200 rounded-lg p-3 grid grid-cols-5 gap-2 shadow-lg z-10">
+                                    <div className="absolute bottom-12 left-0 bg-white border border-gray-200 rounded-xl p-2 grid grid-cols-5 gap-2 shadow-2xl z-20 animate-fadeIn">
                                         {emojis.map((emoji) => (
                                             <button
                                                 key={emoji}
                                                 type="button"
                                                 onClick={() => handleEmojiSelect(emoji)}
-                                                className="text-2xl hover:bg-gray-100 p-2 rounded transition"
+                                                className="text-2xl hover:bg-teal-50 p-1 rounded-full transition focus:outline-none focus:ring-2 focus:ring-teal-300"
                                             >
                                                 {emoji}
                                             </button>
@@ -267,21 +268,18 @@ const ChatPage = () => {
                                     </div>
                                 )}
                             </div>
-                            
                             <input
                                 type="text"
                                 value={input}
                                 onChange={handleTyping}
                                 placeholder={isConnected ? "Share your reading thoughts..." : "Connecting to chat server..."}
                                 disabled={!isConnected}
-                                className="text-black flex-grow px-5 py-3 border-2 border-gray-300 rounded-xl text-base outline-none transition duration-200 ease-in-out focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                className="text-black flex-grow px-5 py-3 border border-gray-300 rounded-full text-base outline-none transition duration-200 ease-in-out focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:bg-gray-100 disabled:cursor-not-allowed shadow-sm"
                             />
                             <button
                                 type="submit"
                                 disabled={!isConnected || !input.trim()}
-                                className="flex items-center space-x-2 px-6 py-3 bg-teal-600 text-white font-semibold rounded-xl shadow-lg 
-                                           transition duration-200 ease-in-out transform hover:bg-teal-700 hover:scale-[1.02] active:scale-[0.98] 
-                                           disabled:bg-gray-400 disabled:cursor-not-allowed disabled:shadow-none"
+                                className="flex items-center gap-2 px-5 py-3 bg-teal-600 text-white font-semibold rounded-full shadow-lg transition duration-200 ease-in-out transform hover:bg-teal-700 hover:scale-[1.03] active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed disabled:shadow-none focus:outline-none focus:ring-2 focus:ring-teal-300"
                             >
                                 <PaperAirplaneIcon className="h-5 w-5 transform -rotate-45" />
                                 <span className='hidden sm:inline'>Send</span>
