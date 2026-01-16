@@ -254,13 +254,14 @@ const ChatPage = () => {
                                 </button>
                                 {/* Emoji Picker */}
                                 {showEmojiPicker && (
-                                    <div className="absolute bottom-12 left-0 bg-white border border-gray-200 rounded-xl p-2 grid grid-cols-5 gap-2 shadow-2xl z-20 animate-fadeIn">
+                                    <div className="absolute bottom-16 left-0 bg-gradient-to-br from-teal-50 via-white to-teal-100 border border-teal-200 rounded-2xl px-4 py-6 grid grid-cols-6 gap-4 shadow-2xl z-30 animate-fadeIn" style={{ minWidth: '320px' }}>
                                         {emojis.map((emoji) => (
                                             <button
                                                 key={emoji}
                                                 type="button"
                                                 onClick={() => handleEmojiSelect(emoji)}
-                                                className="text-2xl hover:bg-teal-50 p-1 rounded-full transition focus:outline-none focus:ring-2 focus:ring-teal-300"
+                                                className="text-3xl hover:bg-teal-200/60 p-3 rounded-xl transition focus:outline-none focus:ring-2 focus:ring-teal-400"
+                                                style={{ transition: 'transform 0.15s', minWidth: '48px', minHeight: '48px' }}
                                             >
                                                 {emoji}
                                             </button>
