@@ -98,11 +98,14 @@ export const markPageCompleted = async (req, res) => {
         
         await user.save();
 
+        // Always return the updated user object for frontend state update
         res.status(200).json({ 
             success: true, 
             message: 'Page marked completed.',
+            user, // <-- updated user object
             streak: user.streak,
             points: user.points,
+            totalPages: user.totalPages,
             session,
             pointsAwarded,
             badgesAwarded, 
