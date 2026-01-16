@@ -105,8 +105,6 @@ export const useChatStore = create((set, get) => ({
 
     sendMessage: (content, receiverId = null) => {
         const { socket, currentRoom } = get();
-        const { user } = useAuthStore.getState();
-
         if (socket && socket.connected) {
             const messageData = {
                 room: currentRoom,
@@ -114,19 +112,6 @@ export const useChatStore = create((set, get) => ({
                 receiverId,
                 messageType: 'text'
             };
-            
-            const tempMessage = { 
-                _id: Date.now(),
-                senderId: user._id, 
-                senderName: user.username || user.email,
-                content, 
-                room: currentRoom,
-                messageType: 'text',
-                createdAt: new Date().toISOString(),
-                reactions: []
-            };
-            set(state => ({ messages: [...state.messages, tempMessage] }));
-            
             socket.emit('sendMessage', messageData);
         }
     },

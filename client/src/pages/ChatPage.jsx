@@ -179,7 +179,7 @@ const ChatPage = () => {
                                 className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} group animate-fadeIn`}
                             >
                                 <div className="relative">
-                                    <div className={`p-3 rounded-xl shadow-lg max-w-[85%] sm:max-w-[70%] break-words transform transition duration-300 hover:shadow-xl
+                                    <div className={`p-3 rounded-xl shadow-lg max-w-[85%] sm:max-w-[100%] break-words transform transition duration-300 hover:shadow-xl
                                         ${isCurrentUser 
                                             ? 'bg-teal-600 text-white rounded-tr-sm' 
                                             : 'bg-gray-100 text-gray-800 rounded-tl-sm'}`
