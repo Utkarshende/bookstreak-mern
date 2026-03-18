@@ -143,7 +143,7 @@ const ChatPage = () => {
         <SignalSlashIcon className="h-4 w-4 mr-1 text-red-300" />;
 
     return (
-        <div className="flex gap-6 px-4 py-6 bg-gradient-to-br from-teal-50 via-white to-gray-100 min-h-screen">
+        <div className="flex gap-4 px-4 py-6 bg-gradient-to-br from-teal-50 via-white to-gray-100 min-h-screen">
             {/* Main Chat */}
             <div className="flex-grow flex flex-col h-[75vh] bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
                 {/* Header */}
