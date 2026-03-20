@@ -162,7 +162,6 @@ const ChatPage = () => {
                     </div>
                 </header>
 
-                {/* Messages Area */}
                 <div className="flex-grow p-5 overflow-y-auto flex flex-col space-y-4 bg-gray-50/50">
                     {messages.length === 0 && (
                         <div className="flex items-center justify-center h-full text-gray-400">
@@ -194,7 +193,6 @@ const ChatPage = () => {
                                         </span>
                                     </div>
 
-                                    {/* Message Actions */}
                                     {isCurrentUser && (
                                         <div className="hidden group-hover:flex absolute right-0 top-0 gap-1 -translate-y-8">
                                             <button
@@ -218,7 +216,6 @@ const ChatPage = () => {
                         );
                     })}
 
-                    {/* Typing Indicator */}
                     {typingUsers.length > 0 && (
                         <div className="flex items-center space-x-2 text-gray-500 text-sm">
                             <div className="flex space-x-1">
