@@ -249,7 +249,6 @@ const ChatPage = () => {
                                 >
                                     <FaceSmileIcon className="h-6 w-6 text-teal-600" />
                                 </button>
-                                {/* Emoji Picker */}
                                 {showEmojiPicker && (
                                     <div className="absolute bottom-14 left-0 bg-white border border-gray-200 rounded shadow z-30 animate-fadeIn p-2">
                                         {emojis.map((emoji) => (
