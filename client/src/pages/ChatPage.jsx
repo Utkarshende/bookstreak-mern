@@ -287,7 +287,7 @@ const ChatPage = () => {
                 </footer>
             </div>
 
-            {/* Sidebar - Online Users */}
+            
             <div className="w-64 bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 hidden lg:flex flex-col">
                 <div className="p-4 bg-teal-700 text-white">
                     <h3 className="font-bold text-lg">Online Users ({onlineUsers.length})</h3>
